@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/tiles/TileInstance.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://res/tiles/dirt.png" type="Texture" id=2]
 [ext_resource path="res://res/tiles/sand.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 5, 5 )
+extents = Vector2( 4, 4 )
 
 [node name="TileInstance" type="StaticBody2D"]
 script = ExtResource( 1 )

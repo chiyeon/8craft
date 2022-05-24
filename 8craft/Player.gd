@@ -7,6 +7,7 @@ var _velocity := Vector2.ZERO;
 
 # --- Inventory ---
 var tiles = [
+	"walls",
 	"water",
 	"grass",
 	"dirt",

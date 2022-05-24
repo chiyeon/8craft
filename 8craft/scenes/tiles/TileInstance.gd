@@ -2,6 +2,8 @@ extends StaticBody2D
 
 class_name TileInstance
 
+const tileSize = 8;
+
 var tile;
 
 func SetSprite(_texture):
@@ -22,73 +24,44 @@ func SetBottomVisibility(_visible):
 	if(get_node("BottomSide")):
 		get_node("BottomSide").visible = _visible;
 
+"""
+Changes sprite to proper variant based on supplied object
+of true/false connections in 4 directions.
+"""
 func Update(connections):
-	if(tile.DoesTile()):
-		var rectPos = Vector2(8, 8);
-		if(connections["up"]):
-			rectPos.y += 8;
-		if(connections["down"]):
-			rectPos.y -= 8;
-		
-		if(connections["right"]):
-			rectPos.x -= 8;
-		if(connections["left"]):
-			rectPos.x += 8;
-		
-		if(connections["right"] == false and connections["left"] == false):
-			rectPos.x = 24;
-			if(connections["up"] and connections["down"]):
-				rectPos.y = 8;
-			else:
-				if(connections["down"]):
-					rectPos.y = 0;
-				elif(connections["up"]):
-					rectPos.y = 16;
-		
-		if(connections["up"] == false and connections["down"] == false):
-			rectPos.y = 24
-			
-			if(connections["right"] and connections["left"]):
-				rectPos.x = 8;
-			else:
-				if(connections["right"]):
-					rectPos.x = 0;
-				elif(connections["left"]):
-					rectPos.x = 16;
-				
-		if(connections["up"] == false and connections["down"] == false and connections["left"] == false and connections["right"] == false):
-			rectPos = Vector2(24, 24);
-		
-		var bottomRectPos = Vector2(8, 32);
+	if not tile.DoesTile():
+		return;
+	
+	# basic autotiling (requires 4x4 tileset, 3x3 block, 1x3 and 3x1 longs, and 1x1 short)
+	var rectPos = Vector2(tileSize, tileSize);
+	var bottomRectPos = Vector2(tileSize, tileSize * 4);
 
-		if !(connections["right"] and connections["left"]):
-			if(connections["right"] == false and connections["left"] == false):
-				bottomRectPos.x = 24;
-			elif(connections["left"] == false):
-				bottomRectPos.x = 0;
-			else:
-				bottomRectPos.x = 16;
-			#if(connections.x == 0 and connections.y == -1):
-			#	rectPos.x = 24;
+	if(tile.AdvancedConnections()):
+		var numTrue = 0;
+		for c in connections.keys():
+			numTrue += 1 if connections[c] else 0;
+		if(numTrue >= 3):
+			rectPos.x = tileSize * 5;
+
+	if (connections["up"] != connections["down"]):
+		if(connections["up"]):
+			rectPos.y += tileSize;
+		else:
+			rectPos.y -= tileSize;
+	elif(connections["up"] == false and connections["down"] == false):
+		rectPos.y = tileSize * 3;
+	
+	if (connections["left"] != connections["right"]):
+		if(connections["right"]):
+			rectPos.x -= tileSize;
+			bottomRectPos.x -= tileSize;
+		else:
+			rectPos.x += tileSize;
+			bottomRectPos.x += tileSize;
+	elif(connections["left"] == false and connections["right"] == false):
+		rectPos.x = tileSize * 3;
+		bottomRectPos.x = tileSize * 3;
 		
-		if(tile.AdvancedConnections()):
-			if(connections["up"] and connections["down"] and connections["left"] and connections["right"]):
-				rectPos.x = 40;
-				rectPos.y = 8;
-			elif(connections["right"] and connections["left"] and connections["down"]):
-				rectPos.x = 40;
-				rectPos.y = 0;
-			elif(connections["right"] and connections["left"] and connections["up"]):
-				rectPos.x = 40;
-				rectPos.y = 16;
-			elif(connections["up"] and connections["down"] and connections["right"]):
-				rectPos.x = 32;
-				rectPos.y = 8;
-			elif(connections["up"] and connections["down"] and connections["left"]):
-				rectPos.x = 48;
-				rectPos.y = 8;
-			
-		get_node("Sprite").region_rect.position = rectPos;
-		if(get_node("BottomSide")):
-			get_node("BottomSide").region_rect.position = bottomRectPos;
-		
+	get_node("Sprite").region_rect.position = rectPos;
+	if(get_node("BottomSide")):
+		get_node("BottomSide").region_rect.position = bottomRectPos;
