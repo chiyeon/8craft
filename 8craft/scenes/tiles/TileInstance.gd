@@ -13,6 +13,7 @@ func SetTile(_tile):
 	var tex = _tile.GetSprite();
 
 	get_node("Sprite").texture = tex;
+	get_node("Sprite").z_index = _tile.Layer();
 	if(get_node("BottomSide")):
 		get_node("BottomSide").texture = tex;
 	get_node("Collision").disabled = !_tile.IsCollidable();

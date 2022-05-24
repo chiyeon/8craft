@@ -6,6 +6,9 @@ var ItemInstance = preload("res://scenes/items/ItemInstance.tscn");
 
 func SetTile(_tile):
 	healthCurrent = _tile.GetHealthMax();
+	get_node("Sprite").region_rect.size = _tile.SpriteSize();
+	get_node("Sprite").position = _tile.SpritePos();
+
 	.SetTile(_tile);
 
 func _on_HitboxArea_area_entered(area):

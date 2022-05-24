@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Reference",
+"class": "GameWorld",
+"language": "GDScript",
+"path": "res://src/world/GameWorld.gd"
+}, {
+"base": "Reference",
 "class": "Inventory",
 "language": "GDScript",
 "path": "res://src/items/Inventory.gd"
@@ -34,31 +39,36 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/tiles/Tile.gd"
 }, {
+"base": "Reference",
+"class": "TileDatabase",
+"language": "GDScript",
+"path": "res://src/tiles/TileDatabase.gd"
+}, {
 "base": "StaticBody2D",
 "class": "TileInstance",
 "language": "GDScript",
 "path": "res://scenes/tiles/TileInstance.gd"
 } ]
 _global_script_class_icons={
+"GameWorld": "",
 "Inventory": "",
 "InventoryItem": "",
 "Item": "",
 "ObjectTile": "",
 "Tile": "",
+"TileDatabase": "",
 "TileInstance": ""
 }
 
 [application]
 
 config/name="8craft"
+run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
 
 [display]
 
 window/size/width=800
-window/size/test_width=800
-window/size/test_height=600
-window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
 [input]
@@ -91,6 +101,16 @@ attack={
 interact={
 "deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+scroll_up={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+scroll_down={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
 

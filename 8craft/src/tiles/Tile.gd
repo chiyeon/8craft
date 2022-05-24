@@ -4,14 +4,16 @@ class_name Tile
 
 var _name := "Tile";
 var _id := "tile_id";
+var _layer := 0;
 var _collidable = false;
 var _doesTile = false;
 var _advancedConnections := false;
 var _connectsTo = [];
 
-func _init(name, id, collidable, doesTile, advancedConnections, connectsTo):
+func _init(name, id, layer, collidable, doesTile, advancedConnections, connectsTo):
 	_name = name;
 	_id = id;
+	_layer = layer;
 	_collidable = collidable;
 	_doesTile = doesTile;
 	_advancedConnections = advancedConnections;
@@ -22,6 +24,9 @@ func Name():
 
 func ID():
 	return _id;
+
+func Layer():
+	return _layer;
 
 func GetSprite():
 	return load("res://res/tiles/" + _id + ".png")

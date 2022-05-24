@@ -20,15 +20,23 @@ script = ExtResource( 1 )
 
 [node name="Player" type="KinematicBody2D" parent="."]
 position = Vector2( 207, 115 )
-z_index = 3
+z_index = 2
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
 texture = ExtResource( 4 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+z_index = 15
 current = true
 zoom = Vector2( 0.25, 0.25 )
+
+[node name="BlockLabel" type="Label" parent="Player/Camera2D"]
+margin_left = -93.0
+margin_top = -68.0
+margin_right = -53.0
+margin_bottom = -54.0
+text = "WATER"
 
 [node name="CollisionBox" type="CollisionShape2D" parent="Player"]
 shape = SubResource( 1 )
@@ -37,3 +45,5 @@ shape = SubResource( 1 )
 
 [node name="Hand" type="Position2D" parent="Player/HandOrigin"]
 position = Vector2( 10, 0 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
