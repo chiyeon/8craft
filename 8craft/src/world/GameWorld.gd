@@ -114,21 +114,17 @@ func _UpdateTile(_pos, _layer):
 	}
 	
 	if(x != 0):
-		if(thisTile.ConnectsTo().has(world_data[_layer][y][x-1])):
-			connections["left"] = true;
+		connections["left"] = thisTile.ConnectsTo().has(world_data[_layer][y][x-1]);
 	if(x != world_data[_layer][0].size() - 1):
-		if(thisTile.ConnectsTo().has(world_data[_layer][y][x+1])):
-			connections["right"] = true;
+			connections["right"] = thisTile.ConnectsTo().has(world_data[_layer][y][x+1]);
 	if(y != 0):
-		if(thisTile.ConnectsTo().has(world_data[_layer][y-1][x])):
-			connections["up"] = true;
+			connections["up"] = thisTile.ConnectsTo().has(world_data[_layer][y-1][x]);
 	if(y != world_data[_layer].size() - 1):
-		if(thisTile.ConnectsTo().has(world_data[_layer][y+1][x])):
-			connections["down"] = true;
+			connections["down"] = thisTile.ConnectsTo().has(world_data[_layer][y+1][x]);
 	
-	world_tiles[_layer][y][x].Update(connections);
+	world_tiles[_layer][y][x].Update(connections, tileSize);
 
-	if(thisTile.ID() != TD.WATER):
+	if(thisTile.ID() != TD.WATER and thisTile.Layer() == TD.LAYER_GROUND):
 		world_tiles[_layer][y][x].SetBottomVisibility(world_data[_layer][y+1][x] == TD.WATER || world_data[_layer][y+1][x] == TD.EMPTY);
 
 func _UpdateWorldLayer(_layer):

@@ -2,8 +2,6 @@ extends StaticBody2D
 
 class_name TileInstance
 
-const tileSize = 8;
-
 var tile;
 
 func SetSprite(_texture):
@@ -28,7 +26,7 @@ func SetBottomVisibility(_visible):
 Changes sprite to proper variant based on supplied object
 of true/false connections in 4 directions.
 """
-func Update(connections):
+func Update(connections, tileSize):
 	if not tile.DoesTile():
 		return;
 	
