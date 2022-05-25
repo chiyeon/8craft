@@ -50,13 +50,13 @@ func SetWorldData(_data):
 	world.UpdateWorld();
 
 func AttemptPlaceTile(_tile, _pos):
-	world.SetTile(_tile, _pos);
+	return world.SetTile(_tile, _pos);
 
 func AttemptRemoveTile(_pos):
 	for layer in range(3, -1, -1):
 		if(world.GetTile(_pos.x, _pos.y, layer) != TD.EMPTY):
 			world.RemoveTile(_pos, layer);
-			return;
+			return true;
 
 func setTrees(_world):
 	for y in range(_world.height):

@@ -40,6 +40,9 @@ func SetTile(_tile, _pos):
 		var tileRef = TD.tiles[_tile];
 		var tileLayer = tileRef.Layer();
 
+		if(_tile == GetTile(_pos.x, _pos.y, tileLayer)):
+			return false;
+
 		# set data, spawn tile
 		SetTileData(_tile, _pos);
 		_SpawnTile(_pos, tileLayer);
@@ -47,6 +50,8 @@ func SetTile(_tile, _pos):
 		_UpdateTile(_pos, tileLayer);
 		for tilePos in _getSurroundingTiles(_pos):
 			_UpdateTile(tilePos, tileLayer);
+		return true;
+	return false;
 
 # sets the tile to EMPTY and removes instance
 func RemoveTile(_pos, _layer):

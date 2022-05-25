@@ -12,7 +12,7 @@ export(NodePath) onready var MovementTween = get_node(MovementTween) as Tween;
 
 # --- Inventory ---
 var tiles = [
-	"walls",
+	"walls_wood",
 	"water",
 	"grass",
 	"dirt",
@@ -46,7 +46,7 @@ func _process(_delta):
 		# rotate hand towards mouse
 		HandOrigin.look_at(get_global_mouse_position());
 		
-		if(Input.is_action_just_pressed("attack")):
+		if(Input.is_action_pressed("attack")):
 			"""
 			var newSlash = Slash.instance();
 			HandOrigin.get_node("Hand").add_child(newSlash);
@@ -54,13 +54,13 @@ func _process(_delta):
 			newSlash.rotation_degrees = 0;
 			"""
 			var pos = Vector2(floor(get_global_mouse_position().x / 8 + 0.5), floor(get_global_mouse_position().y / 8 + 0.5));
-			WorldGenerator.AttemptRemoveTile(pos);
-			rpc("edit_world", "EMPTY", pos);
-		elif(Input.is_action_just_pressed("interact")):
+			if(WorldGenerator.AttemptRemoveTile(pos)):
+				rpc("edit_world", "EMPTY", pos);
+		elif(Input.is_action_pressed("interact")):
 			var pos = Vector2(floor(get_global_mouse_position().x / 8 + 0.5), floor(get_global_mouse_position().y / 8 + 0.5));
 
-			WorldGenerator.AttemptPlaceTile(tiles[currTile], pos);
-			rpc("edit_world", tiles[currTile], pos);
+			if(WorldGenerator.AttemptPlaceTile(tiles[currTile], pos)):
+				rpc("edit_world", tiles[currTile], pos);
 		
 		if(Input.is_action_just_released("scroll_up")):
 			_ChangeCurrTile(1);
