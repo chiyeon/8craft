@@ -10,7 +10,7 @@ var rng = RandomNumberGenerator.new();
 var TD = TileDatabase.new();
 var world = GameWorld.new(WIDTH, HEIGHT, TILE_SIZE, self);
 
-func _ready():
+func CreateWorld():
 	var _date = OS.get_date();
 	var _time = OS.get_time();
 	
@@ -39,6 +39,13 @@ func _ready():
 	setBiomes(world);
 	setTrees(world);
 
+	world.SpawnWorld();
+	world.UpdateWorld();
+
+	return world.world_data;
+
+func SetWorldData(_data):
+	world.world_data = _data;
 	world.SpawnWorld();
 	world.UpdateWorld();
 

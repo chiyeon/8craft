@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/player/Player.gd" type="Script" id=1]
+[ext_resource path="res://res/player/player.png" type="Texture" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 2.0
+height = 2.0
+
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( 207, 115 )
+z_index = 2
+script = ExtResource( 1 )
+PlayerCamera = NodePath("Camera2D")
+NetworkTickRate = NodePath("NetworkTickRate")
+MovementTween = NodePath("MovementTween")
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+z_index = 15
+zoom = Vector2( 0.25, 0.25 )
+
+[node name="BlockLabel" type="Label" parent="Camera2D"]
+margin_left = -93.0
+margin_top = -68.0
+margin_right = -53.0
+margin_bottom = -54.0
+text = "WATER"
+
+[node name="CollisionBox" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="HandOrigin" type="Position2D" parent="."]
+
+[node name="Hand" type="Position2D" parent="HandOrigin"]
+position = Vector2( 10, 0 )
+
+[node name="NetworkTickRate" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="MovementTween" type="Tween" parent="."]
+
+[connection signal="timeout" from="NetworkTickRate" to="." method="_on_NetworkTickRate_timeout"]

@@ -63,8 +63,14 @@ _global_script_class_icons={
 [application]
 
 config/name="8craft"
-run/main_scene="res://World.tscn"
+run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+WorldGenerator="*res://WorldGenerator.gd"
+Network="*res://src/network/Network.gd"
+Global="*res://src/Global.gd"
 
 [display]
 
